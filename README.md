@@ -81,6 +81,24 @@ module.exports = Object.keys(languages).map(function(language) {
 <p>_(undefined)</p>
 ```
 
+
+## Output
+#### dist/index.html
+```html
+<p>标题</p>
+<p>对象深度</p>
+<p>数组深度</p>
+<p>Not Found[undefined]</p>
+```
+
+#### dist/en/index.html
+```html
+<p>title</p>
+<p>object depth</p>
+<p>array  depth</p>
+<p>Not Found[undefined]</p>
+```
+
 ## License
 
 MIT © [Harvey Zack](https://www.zhw-island.com/)
