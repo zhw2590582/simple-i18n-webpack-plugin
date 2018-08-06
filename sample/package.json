@@ -1,0 +1,15 @@
+{
+  "name": "simple-i18n-webpack-plugin-sample",
+  "version": "1.0.0",
+  "description": "webpack i18n plugin sample",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-serve --config ./webpack.config.js --open",
+    "build": "cross-env NODE_ENV=production webpack"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.16.5",
+    "webpack-serve": "^2.0.2"
+  }
+}
