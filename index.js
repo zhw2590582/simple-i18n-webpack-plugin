@@ -36,12 +36,12 @@ module.exports = class SimpleI18nWebpackPlugin {
 				"SimpleI18nWebpackPlugin",
 				(htmlPluginData, callback) => {
 					const languages = this.getLanguages();
-					const defaultLanguage = languages[Object.keys(languages)[0]];
+					const language = languages[this.options.language];
 					htmlPluginData.html = htmlPluginData.html.replace(
 						this.options.pattern,
 						($1, $2, $3) => {
 							const key = $2.trim();
-							const val = get(defaultLanguage, key);
+							const val = get(language, key);
 							if (!key || !val) {
 								return this.options.unmatch + '[' + key + ']';
 							} else {
