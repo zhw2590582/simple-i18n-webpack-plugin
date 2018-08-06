@@ -12,7 +12,7 @@ $ npm i -D simple-i18n-webpack-plugin
 ```js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const SimpleI18nWebpackPlugin = require("../");
+const SimpleI18nWebpackPlugin = require("simple-i18n-webpack-plugin");
 const isProd = process.env.NODE_ENV === "production";
 
 // 定义语言种类和地址
