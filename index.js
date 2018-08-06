@@ -11,23 +11,33 @@ module.exports = class SimpleI18nWebpackPlugin {
 			throw new Error(
 				"Invalid `pattern` option provided, it must be a valid regex."
 			);
-		} else if (!this.options.path || typeof this.options.path !== "string") {
+		} else if (
+			!this.options.language ||
+			typeof this.options.language !== "string"
+		) {
 			throw new Error(
-				"Invalid `path` option provided, it must be a path string."
+				"Invalid `language` option provided, it must be a object."
+			);
+		} else if (
+			!this.options.unmatch ||
+			typeof this.options.unmatch !== "string"
+		) {
+			throw new Error(
+				"Invalid `unmatch` option provided, it must be a string."
 			);
 		}
 	}
 
 	static get DEFAULTS() {
 		return {
+			language: "",
 			pattern: /_\((.*?)\)/gi,
-			path: "",
 			unmatch: "Not Found"
 		};
 	}
 
-	getLanguages() {
-		return importFresh(this.options.path)(importFresh);
+	getLanguage() {
+		return importFresh(this.options.language);
 	}
 
 	apply(compiler) {
@@ -35,17 +45,16 @@ module.exports = class SimpleI18nWebpackPlugin {
 			compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapAsync(
 				"SimpleI18nWebpackPlugin",
 				(htmlPluginData, callback) => {
-					const languages = this.getLanguages();
-					const language = languages[this.options.language];
+					const language = this.getLanguage();
 					htmlPluginData.html = htmlPluginData.html.replace(
 						this.options.pattern,
 						($1, $2, $3) => {
 							const key = $2.trim();
 							const val = get(language, key);
 							if (!key || !val) {
-								return this.options.unmatch + '[' + key + ']';
+								return this.options.unmatch + "[" + key + "]";
 							} else {
-								return val
+								return val;
 							}
 						}
 					);
