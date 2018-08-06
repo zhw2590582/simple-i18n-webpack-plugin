@@ -95,7 +95,7 @@ module.exports = Object.keys(languages).map(function(language) {
 ```html
 <p>title</p>
 <p>object depth</p>
-<p>array  depth</p>
+<p>array depth</p>
 <p>Not Found[undefined]</p>
 ```
 
