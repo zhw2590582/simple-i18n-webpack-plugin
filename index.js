@@ -41,6 +41,10 @@ module.exports = class SimpleI18nWebpackPlugin {
 	}
 
 	apply(compiler) {
+		compiler.hooks.afterCompile.tap('after-compile', compilation => {
+			compilation.fileDependencies.add(this.options.language);
+		});
+
 		compiler.hooks.compilation.tap("SimpleI18nWebpackPlugin", compilation => {
 			compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapAsync(
 				"SimpleI18nWebpackPlugin",
