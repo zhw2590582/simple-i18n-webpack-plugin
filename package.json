@@ -21,6 +21,7 @@
   "homepage": "https://github.com/zhw2590582/simple-i18n-webpack-plugin#readme",
   "devDependencies": {
     "get-value": "^3.0.1",
-    "import-fresh": "^2.0.0"
+    "import-fresh": "^2.0.0",
+    "obj-to-string": "^1.0.1"
   }
 }

@@ -1,5 +1,6 @@
 const importFresh = require("import-fresh");
 const get = require("get-value");
+const objToString = require("obj-to-string");
 
 module.exports = class SimpleI18nWebpackPlugin {
   constructor(options) {
@@ -57,7 +58,7 @@ module.exports = class SimpleI18nWebpackPlugin {
               if (!key || val === false) {
                 return this.options.unmatch + "[" + key + "]";
               } else {
-                return val;
+                return objToString(val);
               }
             }
           );
