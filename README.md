@@ -69,7 +69,7 @@ module.exports = Object.keys(languages).map(function(language) {
 			"object": "object depth"
 		}
 	},
-	"array": [[["array  depth"]]]
+	"array": [[["array depth"]]]
 }
 ```
 
