@@ -1,6 +1,6 @@
 {
   "name": "simple-i18n-webpack-plugin",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "webpack i18n plugin",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "url": "https://github.com/zhw2590582/simple-i18n-webpack-plugin/issues"
   },
   "homepage": "https://github.com/zhw2590582/simple-i18n-webpack-plugin#readme",
-  "devDependencies": {
+  "dependencies": {
     "get-value": "^3.0.1",
     "import-fresh": "^2.0.0",
     "obj-to-string": "^1.0.1"
