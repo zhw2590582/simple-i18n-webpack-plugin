@@ -27,7 +27,7 @@ module.exports = Object.keys(languages).map(function(language) {
 			}),
 			new SimpleI18nWebpackPlugin({
 				language: languages[language], // 语言路径，必填
-				pattern: /_\((.*?)(\((.+?)\))?\)/gi, // 替换正则，选填
+				pattern: /_\((.+?)(\((.+?)\))?\)/gi, // 替换正则，选填
 				unmatch: "Not Found" // 不匹配时的提示文本，选填
 			})
 		]
