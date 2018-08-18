@@ -29,7 +29,7 @@ module.exports = class SimpleI18nWebpackPlugin {
   static get DEFAULTS() {
     return {
       language: "",
-      pattern: /_\((.*?)(\((.+?)\))?\)/gi,
+      pattern: /_\((.+?)(\((.+?)\))?\)/gi,
       unmatch: "Not Found"
     };
   }
