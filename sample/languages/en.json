@@ -9,5 +9,6 @@
     [
       ["array depth"]
     ]
-  ]
+  ],
+  "function": "JSON does not support function types"
 }

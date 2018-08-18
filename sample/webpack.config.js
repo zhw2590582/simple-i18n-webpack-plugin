@@ -5,8 +5,9 @@ const isProd = process.env.NODE_ENV === "production";
 
 // 定义语言种类和地址
 const languages = {
-	zh: path.resolve("./languages/zh.json"),
-	en: path.resolve("./languages/en.json")
+	chs: path.resolve("./languages/chs.json"),
+	cht: path.resolve("./languages/cht.js"),
+	en: path.resolve("./languages/en.json"),
 };
 
 // 返回webpack配置数组
@@ -21,12 +22,12 @@ module.exports = Object.keys(languages).map(function(language) {
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
-				filename: language === "zh" ? "index.html" : language + "/index.html",
+				filename: language === "chs" ? "index.html" : language + "/index.html",
 				template: "./index.html"
 			}),
 			new SimpleI18nWebpackPlugin({
 				language: languages[language], // 语言路径，必填
-				pattern: /_\((.*?)\)/gi, // 替换正则，选填
+				pattern: /_\((.*?)(\((.+?)\))?\)/gi, // 替换正则，选填
 				unmatch: "Not Found" // 不匹配时的提示文本，选填
 			})
 		]

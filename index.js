@@ -29,7 +29,7 @@ module.exports = class SimpleI18nWebpackPlugin {
   static get DEFAULTS() {
     return {
       language: "",
-      pattern: /_\((.*?)\)/gi,
+      pattern: /_\((.*?)(\((.+?)\))?\)/gi,
       unmatch: "Not Found"
     };
   }
@@ -50,18 +50,23 @@ module.exports = class SimpleI18nWebpackPlugin {
           const language = this.getLanguage();
           htmlPluginData.html = htmlPluginData.html.replace(
             this.options.pattern,
-            ($1, $2, $3) => {
-              const key = $2.trim();
+            (matche, $1, $2, $3) => {
+              const key = $1.trim();
               const val = get(language, key, {
                 default: false
               });
               if (!key || val === false) {
                 return this.options.unmatch + "[" + key + "]";
               } else {
-                return objToString(val);
+                if (typeof val === 'function' && $3) {
+                  return objToString(val($3));
+                } else {
+                  return objToString(val);
+                }
               }
             }
           );
+
           callback(null, htmlPluginData);
         }
       );

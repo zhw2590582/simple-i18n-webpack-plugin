@@ -18,10 +18,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SimpleI18nWebpackPlugin = require('simple-i18n-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
-// 定义语言种类和地址
+// 定义语言种类和地址，支持json和js类型，其中js类型支持函数返回字符串
 const languages = {
-  zh: path.resolve('./languages/zh.json'),
-  en: path.resolve('./languages/en.json')
+	chs: path.resolve("./languages/chs.json"),
+	cht: path.resolve("./languages/cht.js"),
+	en: path.resolve("./languages/en.json"),
 };
 
 // 返回webpack配置数组
@@ -36,12 +37,12 @@ module.exports = Object.keys(languages).map(function(language) {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        filename: language === 'zh' ? 'index.html' : language + '/index.html',
+        filename: language === 'chs' ? 'index.html' : language + '/index.html',
         template: './index.html'
       }),
       new SimpleI18nWebpackPlugin({
         language: languages[language], // 语言路径，必填
-        pattern: /_\((.*?)\)/gi, // 替换正则，选填
+        pattern: /_\((.*?)(\((.+?)\))?\)/gi, // 替换正则，选填
         unmatch: 'Not Found' // 不匹配时的提示文本，选填
       })
     ]
@@ -49,7 +50,7 @@ module.exports = Object.keys(languages).map(function(language) {
 });
 ```
 
-#### languages/zh.json
+#### languages/chs.json
 
 ```json
 {
@@ -60,6 +61,27 @@ module.exports = Object.keys(languages).map(function(language) {
     }
   },
   "array": [[["数组深度"]]]
+}
+```
+
+#### languages/cht.js
+
+```js
+module.exports = {
+  "title": "標題",
+  "object": {
+    "object": {
+      "object": "對象深度"
+    }
+  },
+  "array": [
+    [
+      ["數組深度"]
+    ]
+  ],
+  "function": function (val) {
+    return "函數参数測試: " + val
+  }
 }
 ```
 
@@ -89,6 +111,7 @@ module.exports = Object.keys(languages).map(function(language) {
 <p>_(array.0.0)</p>
 <p>_(array.0.0.0)</p>
 <p>_(undefined)</p>
+<p>_(function(test))</p>
 ```
 
 ## Output
@@ -105,6 +128,21 @@ module.exports = Object.keys(languages).map(function(language) {
 <p>[数组深度]</p>
 <p>数组深度</p>
 <p>Not Found[undefined]</p>
+```
+
+#### dist/cht/index.html
+
+```html
+<p>標題</p>
+<p>{ object: { object: 對象深度 } }</p>
+<p>{ object: 對象深度 }</p>
+<p>對象深度</p>
+<p>[[[數組深度]]]</p>
+<p>[[數組深度]]</p>
+<p>[數組深度]</p>
+<p>數組深度</p>
+<p>Not Found[undefined]</p>
+<p>函數参数測試: test</p>
 ```
 
 #### dist/en/index.html
