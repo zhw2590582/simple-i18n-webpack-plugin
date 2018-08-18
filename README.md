@@ -1,6 +1,6 @@
 # simple-i18n-webpack-plugin
 
-> webpack i18n plugin
+> webpack i18n plugin (webpack i18n 多语言插件)
 
 ## Install
 
@@ -18,7 +18,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const SimpleI18nWebpackPlugin = require('simple-i18n-webpack-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
-// 定义语言种类和地址，支持json和js类型，其中js类型支持函数返回字符串
+// 定义语言种类和地址，支持json和js类型，其中js类型支持函数类型
 const languages = {
 	chs: path.resolve("./languages/chs.json"),
 	cht: path.resolve("./languages/cht.js"),
@@ -79,8 +79,8 @@ module.exports = {
       ["數組深度"]
     ]
   ],
-  "function": function (val) {
-    return "函數参数測試: " + val
+  "function": function (...arg) {
+    return "函數参数測試: " + arg.join(', ');
   }
 }
 ```
@@ -111,7 +111,7 @@ module.exports = {
 <p>_(array.0.0)</p>
 <p>_(array.0.0.0)</p>
 <p>_(undefined)</p>
-<p>_(function(test))</p>
+<p>_(function(test1, test2))</p>
 ```
 
 ## Output
@@ -142,7 +142,7 @@ module.exports = {
 <p>[數組深度]</p>
 <p>數組深度</p>
 <p>Not Found[undefined]</p>
-<p>函數参数測試: test</p>
+<p>函數参数測試: test1, test2</p>
 ```
 
 #### dist/en/index.html

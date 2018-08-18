@@ -59,7 +59,8 @@ module.exports = class SimpleI18nWebpackPlugin {
                 return this.options.unmatch + "[" + key + "]";
               } else {
                 if (typeof val === 'function' && $3) {
-                  return objToString(val($3));
+                  const result = val.apply(language, $3.split(',').map(item => item.trim()));
+                  return objToString(result);
                 } else {
                   return objToString(val);
                 }

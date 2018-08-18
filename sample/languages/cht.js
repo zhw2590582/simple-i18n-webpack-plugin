@@ -10,7 +10,7 @@ module.exports = {
       ["數組深度"]
     ]
   ],
-  "function": function (val) {
-    return "函數参数測試: " + val
+  "function": function (...arg) {
+    return "函數参数測試: " + arg.join(', ');
   }
 }
