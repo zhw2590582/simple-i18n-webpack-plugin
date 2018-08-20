@@ -11,6 +11,6 @@ module.exports = {
     ]
   ],
   "function": function (...arg) {
-    return "函數参数測試: " + arg.join(', ');
+    return "函數参数測試: " + (arg.length ? arg.join(', ') : '空');
   }
 }

@@ -42,7 +42,7 @@ module.exports = Object.keys(languages).map(function(language) {
       }),
       new SimpleI18nWebpackPlugin({
         language: languages[language], // 语言路径，必填
-        pattern: /_\((.+?)(\((.+?)\))?\)/gi, // 替换正则，选填
+        pattern: /_\((.+?)(\((.+?)?\))?\)/gi, // 替换正则，选填
         unmatch: 'Not Found' // 不匹配时的提示文本，选填
       })
     ]
@@ -80,7 +80,7 @@ module.exports = {
     ]
   ],
   "function": function (...arg) {
-    return "函數参数測試: " + arg.join(', ');
+    return "函數参数測試: " + (arg.length ? arg.join(', ') : '空');
   }
 }
 ```
@@ -111,6 +111,8 @@ module.exports = {
 <p>_(array.0.0)</p>
 <p>_(array.0.0.0)</p>
 <p>_(undefined)</p>
+<p>_(function)</p>
+<p>_(function())</p>
 <p>_(function(test1, test2))</p>
 ```
 
@@ -142,6 +144,8 @@ module.exports = {
 <p>[數組深度]</p>
 <p>數組深度</p>
 <p>Not Found[undefined]</p>
+<p>function (...arg) { return "函數参数測試: " + (arg.length ? arg.join(', ') : '空'); }</p>
+<p>函數参数測試: 空</p>
 <p>函數参数測試: test1, test2</p>
 ```
 

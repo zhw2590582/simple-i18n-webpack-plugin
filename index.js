@@ -5,19 +5,22 @@ const objToString = require("obj-to-string");
 module.exports = class SimpleI18nWebpackPlugin {
   constructor(options) {
     this.options = Object.assign({}, SimpleI18nWebpackPlugin.DEFAULTS, options);
-    if (!this.options.pattern ||
+    if (
+      !this.options.pattern ||
       Object.prototype.toString.call(this.options.pattern) !== "[object RegExp]"
     ) {
       throw new Error(
         "Invalid `pattern` option provided, it must be a valid regex."
       );
-    } else if (!this.options.language ||
+    } else if (
+      !this.options.language ||
       typeof this.options.language !== "string"
     ) {
       throw new Error(
         "Invalid `language` option provided, it must be a object."
       );
-    } else if (!this.options.unmatch ||
+    } else if (
+      !this.options.unmatch ||
       typeof this.options.unmatch !== "string"
     ) {
       throw new Error(
@@ -29,7 +32,7 @@ module.exports = class SimpleI18nWebpackPlugin {
   static get DEFAULTS() {
     return {
       language: "",
-      pattern: /_\((.+?)(\((.+?)\))?\)/gi,
+      pattern: /_\((.+?)(\((.+?)?\))?\)/gi,
       unmatch: "Not Found"
     };
   }
@@ -39,7 +42,7 @@ module.exports = class SimpleI18nWebpackPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.afterCompile.tap('after-compile', compilation => {
+    compiler.hooks.afterCompile.tap("after-compile", compilation => {
       compilation.fileDependencies.add(this.options.language);
     });
 
@@ -58,9 +61,19 @@ module.exports = class SimpleI18nWebpackPlugin {
               if (!key || val === false) {
                 return this.options.unmatch + "[" + key + "]";
               } else {
-                if (typeof val === 'function' && $3) {
-                  const result = val.apply(language, $3.split(',').map(item => item.trim()));
-                  return objToString(result);
+                if (typeof val === "function") {
+                  if ($2 === "()") {
+                    const result = val.call(language);
+                    return objToString(result);
+                  } else if ($3) {
+                    const result = val.apply(
+                      language,
+                      $3.split(",").map(item => item.trim())
+                    );
+                    return objToString(result);
+                  } else {
+                    return objToString(val);
+                  }
                 } else {
                   return objToString(val);
                 }
