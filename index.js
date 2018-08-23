@@ -26,6 +26,13 @@ module.exports = class SimpleI18nWebpackPlugin {
       throw new Error(
         "Invalid `unmatch` option provided, it must be a string."
       );
+    } else if (
+      !this.options.beforeCreate ||
+      typeof this.options.beforeCreate !== "function"
+    ) {
+      throw new Error(
+        "Invalid `beforeCreate` option provided, it must be a function."
+      );
     }
   }
 
@@ -33,7 +40,8 @@ module.exports = class SimpleI18nWebpackPlugin {
     return {
       language: "",
       pattern: /_\((.+?)(\((.+?)?\))?\)/gi,
-      unmatch: "Not Found"
+      unmatch: "Not Found",
+      beforeCreate: language => language
     };
   }
 
@@ -50,7 +58,7 @@ module.exports = class SimpleI18nWebpackPlugin {
       compilation.hooks.htmlWebpackPluginBeforeHtmlProcessing.tapAsync(
         "SimpleI18nWebpackPlugin",
         (htmlPluginData, callback) => {
-          const language = this.getLanguage();
+          const language = this.options.beforeCreate(this.getLanguage());
           htmlPluginData.html = htmlPluginData.html.replace(
             this.options.pattern,
             (matche, $1, $2, $3) => {
