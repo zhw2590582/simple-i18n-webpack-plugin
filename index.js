@@ -70,13 +70,14 @@ module.exports = class SimpleI18nWebpackPlugin {
                 return this.options.unmatch + "[" + key + "]";
               } else {
                 if (typeof val === "function") {
+                  const fileName = htmlPluginData.outputName;
                   if ($2 === "()") {
-                    const result = val.call(language);
+                    const result = val.call(language, fileName);
                     return objToString(result);
                   } else if ($3) {
                     const result = val.apply(
                       language,
-                      $3.split(",").map(item => item.trim())
+                      $3.split(",").map(item => item.trim()).concat(fileName)
                     );
                     return objToString(result);
                   } else {
